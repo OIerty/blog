@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://oierty.github.io</id>
+    <title>OIer Tang Ye&apos;s Blog</title>
+    <updated>2020-03-15T07:31:55.236Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://oierty.github.io"/>
+    <link rel="self" href="https://oierty.github.io/atom.xml"/>
+    <subtitle>一个奋斗ing的OIer</subtitle>
+    <logo>https://oierty.github.io/images/avatar.png</logo>
+    <icon>https://oierty.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, OIer Tang Ye&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[2020 NOI online 游记]]></title>
+        <id>https://oierty.github.io/qvE9TvwC-/</id>
+        <link href="https://oierty.github.io/qvE9TvwC-/">
+        </link>
+        <updated>2020-03-10T02:57:51.000Z</updated>
+        <content type="html"><![CDATA[<p>3月7日下午，NOI online入门组在2:30开始了。</p>
+<p>然而，ZJ以及全国多地的网站都在2:35左右就死亡了，于是，CCF在3:10的时候，把这些网站的源代码植入到了其他网站之中。</p>
+<p>仅仅两分钟后，这些诈尸了的网站大部分又死了，ZJ及多省的考生等啊等，大家都说，再给我一次机会考试吧（炸网站吧）。</p>
+<p>三个小时以后，很多地方已经考完了，ZJ考生决定拿个枕头放电脑前（其实是把电脑放床上啦），CCF又移植了一个土豆服务器，两分钟后，又炸完了，ZJ考生纷纷表示，如果CCF不搞个好些的服务器，ZJ考生人均爆零。于是，在CCF土豆服务器死亡５个小时以后，CCF把官网的子域名拿来用，终于，疲惫不堪的考生们又敲起了键盘，大家表示新服务器的流畅超乎想象（虽然中间还是炸过），于是考生就奋战到了23:30。</p>
+<p>第一次国内比赛熬夜祭！</p>
+<p>入门组难度，洛谷评分：</p>
+<p>T1:<span data-v-20b7d558="" data-v-5d8b465a="" class="lfe-caption" data-v-445f91a0="" style="background: rgb(255, 193, 22); color: rgb(255, 255, 255);">  普及/提高-</span></p>
+<p>T2:<span data-v-20b7d558="" data-v-5d8b465a="" class="lfe-caption" data-v-445f91a0="" style="background: rgb(157, 61, 207); color: rgb(255, 255, 255);">省选/NOI-</span></p>
+<p>T3:<span data-v-20b7d558="" data-v-5d8b465a="" class="lfe-caption" data-v-445f91a0="" style="background: rgb(157, 61, 207); color: rgb(255, 255, 255);">省选/NOI-</span></p>
+<p>考入门组就考出了弱省省选的感觉。</p>
+<h1 id="以下是入门组题解题解多为网上找的">以下是入门组题解题解，多为网上找的：</h1>
+<h2 id="t1-洛谷题面">T1: <a href="https://www.luogu.com.cn/problem/P6188">洛谷题面</a></h2>
+<p>这道题看起来是很简单的题</p>
+<h3 id="方法一暴力俗话说暴力出奇迹由于部分分很足暴力足以得-90pts">方法一：暴力<s>俗话说，暴力出奇迹</s>，由于部分分很足，暴力足以得 <em>90pts</em></h3>
+<p><em>90pts</em>  <em>code</em> 这是 Lattle_car  大佬看错限制的初次代码</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int a,b,c;
+int ansa,ansb,ansc;
+int n;
+int maxsum=-1,maxmin=-1;
+bool flag=1;
+int main()
+{
+  freopen(&quot;order.in&quot;,&quot;r&quot;,stdin);
+  freopen(&quot;order.out&quot;,&quot;w&quot;,stdout);
+  cin&gt;&gt;n;
+  if(n&lt;3)
+  {
+    cout&lt;&lt;-1;
+    return 0;
+  }
+  for(a=0; a&lt;=n/7; a++)
+    for(b=0; b&lt;=n/4; b++)
+      for(c=0; c&lt;=n/3; c++)
+      {
+        int sum=a+b+c;
+        int minn=min(a,min(b,c));
+        int kkk=7*a+4*b+3*c;
+        if(kkk==n)
+        {
+          flag=0;
+          if(minn&gt;maxmin)
+          {
+            ansa=a;
+            ansb=b;
+            ansc=c;
+            maxsum=sum;
+            maxmin=minn;
+          }
+          else if(minn==maxmin&amp;&amp;maxsum&lt;sum)
+          {
+            ansa=a;
+            ansb=b;
+            ansc=c;
+            maxsum=sum;
+            maxmin=minn;
+          }
+        }
+      }
+  if(flag) cout&lt;&lt;-1;
+  else cout&lt;&lt;ansa&lt;&lt;' '&lt;&lt;ansb&lt;&lt;' '&lt;&lt;ansc;
+  return 0;
+}
+</code></pre>
+<h3 id="正解打表俗话又说数学上来先打表">正解：打表<s>俗话又说，数学上来先打表</s></h3>
+<p>我们可以发现一个规律：除了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">1,2,5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span></span></span></span>其他都能找出正确方法，然后又发现能找出方法的，每加14，最优解的各个方案数都加上1，如：</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>3</th>
+<th>17</th>
+<th>31</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ans</td>
+<td>0,0,1</td>
+<td>1,1,2</td>
+<td>2,2,3</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>10</th>
+<th>24</th>
+<th>38</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ans</td>
+<td>0,1,2</td>
+<td>1,2,3</td>
+<td>2,3,4</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>14</th>
+<th>28</th>
+<th>42</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ans</td>
+<td>1,1,1</td>
+<td>2,2,2</td>
+<td>3,3,3</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">...</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.10556em;vertical-align:0em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span></span></span></span></p>
+<p>然后我们只要在一些不成立的数特判一下就好了。</p>
+<p><em>C++</em>  <em>AC</em>  <em>code:</em></p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+	freopen(&quot;order.in&quot;,&quot;r&quot;,stdin);
+	freopen(&quot;order.out&quot;,&quot;w&quot;,stdout);//文件输入输出流
+	cin&gt;&gt;n;
+	if(n%14==0)printf(&quot;%d %d %d&quot;,n/14,n/14,n/14);//n为14倍数时
+	else if(n&lt;14) {//特判‍‍​‍‌‍​‍‍‍​‌‍‍‌‌​​‌‍‍‌‌​‍‌‍​‌​‍‌‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌​‍​‌‌‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‍‍​‍‍‌‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‍‍​‌‍‍‍‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‍‍​‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌‍‍​‍‌‌‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌‍‍​‍‍‍‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌‍‍​‍‌‌​‌‍‍‌‌​​‌‍‍‌‌​‍‍‌​‌‌‌‌​‌‌‍‌​‌‍‍‌‌​​‌‍‍‌‌​‌‍‌‌​‌‍‍‍​‌‌‌‍​‌‍‍‌‌​​‌‍‍‌‌​‌‍‌​‌‍‍‌​‌‌‌‍‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‍‍​‍‍‌‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‍‍​‌‍‍‍‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‍‍​‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌‍‍​‍‌‌‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‍‍​‍‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌‍‍​‍‍‍‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌‍‍​‍‌‌​‌‍‍‌‌​​‌‍‍‌‌​‍‍‌​‍‍‌​‍‍‌‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‌​‍‍‌​‍‌‌‌​‌‍‍‌‌​​‌‍‍‌‌​‌‍‍‍​‌​‍‍‍​‌‍‍‌‌​​‌‍‍‌‌​‍‌‍​‍‌‍‌​‌‍‍‌​‌‍‍‌‌​​‌‍‍‌‌​‌‍‍‍‍​‌​‍‌‌​‍‍‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌​‍‌‌‌​‌‍‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌​‍‌‍‌​‍‌‌​‌‍‍‌‌​​‌‍‍‌‌​‍​‍​‌‌‌​‌‍‍‌‌​​‌‍‍‌‌​‍​‍‍‍​‍‌‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‍‌​‌​‍‌‍‍​‌‍‍‌‌​​‌‍‍‌‌​‍‍‌​‍‌‌‌‌​‍‌‍‍​‌‍‍‌‌​​‌‍‍‌‌​‌‌‌‌​‌‍‌‌​‍‍‍‍‍​‌‍‍‌‌​​‌‍‍‌‌​‍‍‍‍‌​‌‌‌‌​‌​‌‍‍‌‌​​‌‍‍‌‌
+    if(a[n][0]!=-1)printf(&quot;%d %d %d&quot;,a[n][2],a[n][1],a[n][0]);
+		else cout&lt;&lt;-1;
+	} else {//常规规律
+		if(a[n%14+14][0]!=-1)printf(&quot;%d %d %d&quot;,a[n%14+14][2]+n/14-1,a[n%14+14][1]+n/14-1,a[n%14+14][0]+n/14-1);
+		else cout&lt;&lt;-1;
+	}
+	return 0;//函数返回0
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://oierty.github.io/post-images/1584257407093.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【Codeforces】题解 CF401C 【Team】]]></title>
+        <id>https://oierty.github.io/solution-CF401C/</id>
+        <link href="https://oierty.github.io/solution-CF401C/">
+        </link>
+        <updated>2020-03-01T12:16:53.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="cf401cteam"><a href="https://www.luogu.com.cn/problem/CF401C">CF401C【Team】</a></h2>
+<p>这里先声明，本方法样例1不过，但测试点全过<s>别问我为什么</s></p>
+<p>因为题目说的是任意，没说清楚，导致大量对的代码都错，QAQ</p>
+<p>可行数据：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mo>&lt;</mo><mo>=</mo><mi>n</mi><mo>×</mo><mn>2</mn><mo>+</mo><mn>2</mn><mo separator="true">,</mo><mi>n</mi><mo>&lt;</mo><mo>=</mo><mi>m</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m&lt;=n×2+2,n&lt;=m+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int n,m;
+int main(){
+	cin&gt;&gt;n&gt;&gt;m;
+	if(n&gt;m+1||m&gt;n*2+2)cout&lt;&lt;-1;//如果超出:-1;
+	else{//没超出：
+		if(n&gt;m){1.n&gt;m;//输出m个01后输出0；
+			for(int i=1;i&lt;n;i++)cout&lt;&lt;&quot;01&quot;;
+			cout&lt;&lt;0;
+		}
+		else{//2.m&gt;2n;输出m-2n个1；输出n个011；3.2n&gt;m&gt;=n;输出m-n个011；输出2n-m个01；
+			if(m&gt;n*2){
+            for(int i=0;i&lt;m-n*2;i++)
+            	cout&lt;&lt;1;
+            m=2*n;
+        }
+			for(int i=0;i&lt;m-n;i++)cout&lt;&lt;&quot;011&quot;;
+			for(int i=0;i&lt;n*2-m;i++)cout&lt;&lt;&quot;01&quot;;
+		}
+	}
+	return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://oierty.github.io/post-images/1584257407093.png" alt="" loading="lazy"></figure>
+<h2 id="洛谷原文"><a href="https://www.luogu.com.cn/blog/tangye123/solution-cf401c">洛谷原文</a></h2>
+<blockquote>
+<p>声明：<br>
+未提前声明时，本网站任何部分转载需注明出处<br>
+谢谢配合</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[声明]]></title>
+        <id>https://oierty.github.io/statement/</id>
+        <link href="https://oierty.github.io/statement/">
+        </link>
+        <updated>2020-03-01T11:55:19.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>声明：<br>
+未提前声明时，本网站任何部分（包括但不限于文字、图片）转载需注明出处<br>
+谢谢配合</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[浅谈__int128]]></title>
+        <id>https://oierty.github.io/int128/</id>
+        <link href="https://oierty.github.io/int128/">
+        </link>
+        <updated>2020-02-29T01:16:45.000Z</updated>
+        <content type="html"><![CDATA[<p>很多时候，题目的数据范围刚好卡在long long的临界范围，经过多次运算后，最后答案就有可能会爆（例如P6101 出言不逊）。</p>
+<p>有可能只是本蒟蒻太菜，不会用其他方法，我就偶然瞟到了有人在讨论__int128这个类型，我觉得很神奇，就自己试了试，发现：</p>
+<p><s>woc</s>，不能用cin，cout读入输出有个鬼用</p>
+<p>于是我想到了类似于快读的好东西</p>
+<p>读入程序如下：</p>
+<pre><code>inline void read(__int128 &amp;x) {
+	x=0;
+	int f=1;//判断正负 
+	char ch=getchar();//读入字符
+	while(ch&lt;'0'||ch&gt;'9') {
+		if(ch=='-')
+			f=-1;
+		ch=getchar();
+	}
+	while(ch&gt;='0'&amp;&amp;ch&lt;='9') {//是数字就读
+		x=x*10+ch-'0';//之前结果乘10，加现在读入的
+		ch=getchar();
+	}
+	x*=f;//添上符号返回
+}
+</code></pre>
+<p>输出程序如下：</p>
+<pre><code>inline void write(__int128 x) {
+	if(x&lt;0) {
+		putchar('-');//输出符号
+		x=-x;
+	}
+	if(x&gt;9)write(x/10);//递归输出
+	putchar(x%10+'0');//输出个位
+}
+</code></pre>
+<p>以下是操作实例：</p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+inline void read(__int128 &amp;x) {
+	x=0;
+	int f=1;//判断正负 
+	char ch=getchar();//读入字符
+	while(ch&lt;'0'||ch&gt;'9') {
+		if(ch=='-')
+			f=-1;
+		ch=getchar();
+	}
+	while(ch&gt;='0'&amp;&amp;ch&lt;='9') {//是数字就读
+		x=x*10+ch-'0';//之前结果乘10，加现在读入的
+		ch=getchar();
+	}
+	x=x*f;//添上符号返回
+}
+inline void write(__int128 x) {
+	if(x&lt;0) {
+		putchar('-');//输出符号
+		x=-x;
+	}
+	if(x&gt;9)write(x/10);//递归输出
+	putchar(x%10+'0');//输出个位
+}
+__int128 a,b;
+int main(){
+	read(a);//读入a
+	read(b);//读入b
+	write(a+b);//输出a+b
+	return 0;//完美结束
+}
+</code></pre>
+<p>__int128范围是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">−</mi><msup><mn>2</mn><mn>127</mn></msup><mo>≤</mo><mi>x</mi><mo>&lt;</mo><msup><mn>2</mn><mn>127</mn></msup></mrow><annotation encoding="application/x-tex">−2^{127}≤x&lt;2^{127}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.950078em;vertical-align:-0.13597em;"></span><span class="mord">−</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">2</span><span class="mord mtight">7</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">2</span><span class="mord mtight">7</span></span></span></span></span></span></span></span></span></span></span></span>。</p>
+<p>那有时候条件是&lt;$ 2^{128} $的非负整数数怎么办？</p>
+<p>那就加个unsigned呀！</p>
+<p>直接讲实例了：</p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+inline void read(unsigned __int128 &amp;x) {
+	x=0; 
+	char ch=getchar();//读入字符
+	while(ch&gt;='0'&amp;&amp;ch&lt;='9') {//是数字就读
+		x=x*10+ch-'0';//之前结果乘10，加现在读入的
+		ch=getchar();
+	}
+	//已经读完 
+}
+inline void write(unsigned __int128 x) {
+	if(x&gt;9)write(x/10);//递归输出
+	putchar(x%10+'0');//输出个位
+}
+unsigned __int128 a,b;//无符号整型
+int main(){
+	read(a);//读入a
+	read(b);//读入b
+	write(a+b);//输出a+b
+	return 0;//完美结束
+}
+</code></pre>
+<p>但是大家要注意，尽量少用，因为内存占得很多</p>
+<h2 id="洛谷原文"><a href="https://www.luogu.com.cn/blog/tangye123/qian-tan-int128-post">洛谷原文</a></h2>
+<blockquote>
+<p>声明：<br>
+未提前声明时，本网站任何部分转载需注明出处<br>
+谢谢配合</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[游戏]]></title>
+        <id>https://oierty.github.io/game/</id>
+        <link href="https://oierty.github.io/game/">
+        </link>
+        <updated>2020-02-29T01:14:58.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一大波闲的无聊的游戏冲击"><strong>一大波闲的无聊的游戏冲击：</strong></h3>
+<h3 id="游戏集合c"><a href="https://www.luogu.com.cn/discuss/show/30357">游戏集合||c++</a></h3>
+<h4 id="小黑屋"><a href="https://www.xd0.com/admin/index.html?lang=cn">小黑屋</a></h4>
+<h4 id="名字竞技场"><a href="http://namerena.github.io/">名字竞技场</a></h4>
+<h4 id="猫国建设者"><a href="https://likexia.gitee.io/cat-zh/">猫国建设者</a></h4>
+<h4 id="画画"><a href="http://www.qijishow.com/Brand/Brand23/index.htm">画画</a></h4>
+<p>不定期更新ing</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【洛谷】题解P1706【全排列问题】]]></title>
+        <id>https://oierty.github.io/solution-P1706/</id>
+        <link href="https://oierty.github.io/solution-P1706/">
+        </link>
+        <updated>2020-02-29T00:55:04.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="洛谷p1706全排列问题"><a href="https://www.luogu.com.cn/problem/P1706">【洛谷】P1706【全排列问题】</a></h2>
+<p>首先全排列个数就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>!</mo></mrow><annotation encoding="application/x-tex">n!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mclose">!</span></span></span></span><br>
+接下来是C++在全排列里的过程：</p>
+<pre><code>next_permutation(a,a+n);//n表示全排列数，这可以让a[0]~a[n-1]按字典序进行下一全排列
+prev_permutation(a,a+n);//进行上一去排列
+</code></pre>
+<p>不多说了 贴代码：</p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int a[10],n,i,j=1,k;
+int main(){
+	scanf(&quot;%d&quot;,&amp;n);
+	for(i=0;i&lt;n;i++){
+		a[i]=n-i;//末项全排列，下一为第一个
+		j*=i+1;//算总数n!
+	}
+	for(i=0;i&lt;j;i++){
+		next_permutation(a,a+n);
+		for(k=0;k&lt;n;k++)printf(&quot;%5d&quot;,a[k]);//做场宽
+		printf(&quot;\n&quot;);
+	}
+	return 0;
+}
+</code></pre>
+<p>就这么回事了<br>
+<img src="https://oierty.github.io/post-images/1584257407093.png" alt="" loading="lazy"></p>
+<h2 id="洛谷原文"><a href="https://www.luogu.com.cn/blog/tangye123/solution-p1706">洛谷原文</a></h2>
+<blockquote>
+<p>声明：<br>
+未提前声明时，本网站任何部分转载需注明出处<br>
+谢谢配合</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【洛谷】题解 P1090 【合并果子】]]></title>
+        <id>https://oierty.github.io/solution-P1090/</id>
+        <link href="https://oierty.github.io/solution-P1090/">
+        </link>
+        <updated>2020-02-29T00:05:14.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="洛谷p1090合并果子"><a href="https://www.luogu.com.cn/problem/P1090">【洛谷】P1090【合并果子】</a></h2>
+<p>这乍看，很水的贪心：每次将最小两队合并为一堆</p>
+<p>再一编：TLE<s>我去</s></p>
+<p>于是就得用到优先队列</p>
+<p><s>本人不是很懂，请教了旁人</s></p>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">    #include&lt;bits/stdc++.h&gt;
+    using namespace std;
+    long long n,s,t;
+    priority_queue&lt;int, vector&lt;int&gt;,greater&lt;int&gt; &gt;q;//优先队列 
+    int main(){
+    	cin&gt;&gt;n;
+    	for(int i=0;i&lt;n;i++){
+    		cin&gt;&gt;t;
+    		q.push(t);//入
+    	}
+    	for(int i=n;i&gt;1;i--){
+    		t=q.top();
+    		q.pop();//出
+    		t+=q.top();//单次力
+    		q.pop();
+    		s+=t;//加入总值
+    		q.push(t);//入合并好的堆
+    	}
+    	cout&lt;&lt;s;//输出
+    	return 0;
+    }
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://oierty.github.io/post-images/1584257407093.png" alt="" loading="lazy"></figure>
+<h2 id="洛谷原文"><a href="https://www.luogu.com.cn/blog/tangye123/solution-p1090">洛谷原文</a></h2>
+<blockquote>
+<p>声明：<br>
+未提前声明时，本网站任何部分转载需注明出处<br>
+谢谢配合</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[导读]]></title>
+        <id>https://oierty.github.io/contents/</id>
+        <link href="https://oierty.github.io/contents/">
+        </link>
+        <updated>2020-02-28T10:49:09.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题解"><a href="https://oierty.github.io/solution">题解</a></h2>
+<h2 id="关于"><a href="https://oierty.github.io/about-me">关于</a></h2>
+<h3 id="不定期更新ing">不定期更新ing</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[主页]]></title>
+        <id>https://oierty.github.io/home/</id>
+        <link href="https://oierty.github.io/home/">
+        </link>
+        <updated>2020-02-26T16:00:00.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="此人太菜">此人太菜</h1>
+<h2 id="文化课菜">文化课菜</h2>
+<h3 id="语文菜">语文菜</h3>
+<h3 id="数学菜">数学菜</h3>
+<h3 id="英语菜">英语菜</h3>
+<h3 id="科学菜">科学菜</h3>
+<blockquote>
+<p>生物物理化学菜</p>
+</blockquote>
+<h3 id="综合菜">综合菜</h3>
+<blockquote>
+<p>社会历史地理政治道德法治样样都菜</p>
+</blockquote>
+<h2 id="编程太菜">编程太菜</h2>
+<p>才上初一</p>
+<p>已经就要被被小学生虐的初一虐了</p>
+<p>本蒟蒻的CF号：<br>
+<a href="https://codeforces.com/profile/jvruo_ty"><img src="https://img.shields.io/badge/jvruo_ty-Pupil%20%201337-00aa22.svg?longCache=true&amp;style=flat&amp;logo=Codeforces&amp;link=https://codeforces.com/profile/jvruo_ty" alt="" loading="lazy"></a></p>
+<hr>
+<h1 id="洛谷日报索引">洛谷日报索引：</h1>
+<h2 id="2018年"><a href="https://www.luogu.com.cn/discuss/show/48491">2018年</a></h2>
+<h2 id="2019年"><a href="https://www.luogu.com.cn/discuss/show/92685">2019年</a></h2>
+<h2 id="2020年"><a href="https://www.luogu.com.cn/discuss/show/179788">2020年</a></h2>
+<h1 id="以下并非正事">以下并非正事</h1>
+<pre><code>暴力出奇迹，骗分过样例。
+数学先打表，ＤＰ靠运气。
+穷举ＴＬＥ，递推ＵＫＥ。
+模拟ＭＬＥ，贪心还ＣＥ。
+要想骗到分，就要有方法。
+图论背模板，数论背公式。
+动规背方程，高精背代码。
+如果都没背，干脆输样例。
+模拟只会猜题意,贪心只能过样例,
+数学上来先打表,动态一般看规律。
+组合数学靠运气,计算几何瞎暴力,
+图论一顿套模板,数论只会GCD。
+</code></pre>
+<p><img src="https://cdn.luogu.com.cn/upload/pic/15422.png" alt="" loading="lazy"><br>
+<img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1fsak5rti8zg306y06y45f.gif" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1fsak77zbuog30ic0c8dk7.gif" alt="本人水平" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://s1.ax1x.com/2018/04/04/C9AddU.gif" alt="" loading="lazy"></figure>
+<h4 id="如果说">如果说</h4>
+<pre><code>AC: Answer Correct 正确的答案
+CE：Compile Easily 轻松地通过编译
+PC：Pass Compile 通过编译
+WA：Wonderful Answer 极好的答案
+RE：Right Enough 太过正确
+TLE: Time Limit Enough 时间充裕
+MLE: Memory Limit Enough 内存充裕
+OLE：Output Limit Enough 输出充裕
+UKE: Unknown Exactness 不明情况地正确
+</code></pre>
+<h4 id="就好了">就好了</h4>
+<pre><code>膜你抄
+屏幕在深夜微微发亮
+思想在那虚树路径上彷徨
+平面的向量交错生长
+织成 忧伤的网
+剪枝剪去我们的疯狂
+SPFA告诉我前途在何方
+01背包装下了忧伤
+笑颜 洋溢脸庞
+键盘微凉 鼠标微凉
+指尖流淌 代码千行
+凸包周长 直径多长
+一进考场 全都忘光
+你在OJ上提交了千百遍
+却依然不能卡进那时限
+双手敲尽代码也敲尽岁月
+只有我一人 写的题解
+凋零在OJ里面
+tarjan陪伴强联通分量
+生成树完成后思路才闪光
+欧拉跑过的七桥古塘
+让你 心驰神往
+队列进出图上的方向
+线段树区间修改求出总量
+可持久留下的迹象
+我们 俯身欣赏
+数论算法 图论算法
+高斯费马 树上开花
+线性规划 动态规划
+时间爆炸 如何优化
+我在OI中辗转了千百天
+却不让我看AK最后一眼
+我用空间换回超限的时间
+随重新编译 测完样例
+才发现漏洞满篇
+原来CE 是因选错语言
+其实爆0 只因忘写文件
+如果标算太难请坚定信念
+不如回头再看一眼题面
+以那暴力模拟向正解吊唁
+蒟蒻的蜕变 神犇出现
+终将与Au擦肩
+屏幕在深夜微微发亮
+我心在考场
+</code></pre>
+<pre><code>刷题是一种出路 枚举是一种思想
+打表是一种勇气 搜索是一种信仰
+剪枝是一种精神 骗分是一种日常
+爆零是一种宿命 WA是一种绝望
+TLE是一种痛苦 RE是一种放弃
+UKE是一种无奈 AC是一种原谅
+AK是一种幻想 弃赛是一种颓废
+吊打是一种必然 进队是一种奢望
+NOI是一种梦想
+</code></pre>
+<pre><code>这里是洛谷 现在面向全球各国的Oier们做最后播报 
+在过去的三十六小时里 Oier们经历了有史以来最大的刷题危机 
+在全球各国一百五十万教练的拼搏与催促下 71％的初中Oier和100％高中Oier开始全功率刷题 
+但遗憾的是目前的OI题量 已经超过全部Oier的总做题功率
+Oier错失了最后的做完题目机会 为了Oier文明之延续 
+kkksc03将启动火种计划 洛谷储藏了三十万本Oier书和一亿道题目，
+储存着全球已知的神犇名字 并设有全部Oier文明的数字资料库 
+以确保在新的OJ网站重建完整的OI文明 你们都是洛谷的英雄 我们谨记于心 
+以你们为荣 我们将肩负着你们全部的希望 
+A掉所有的黑题
+</code></pre>
+<pre><code>树剖村庄，七桥古塘。写程序、豪兴徜徉。OJ几许，收尽春光。有WA红，RE紫，CE黄。
+平面向量，凸包周长。扬队列、最短路傍。偶然刷题，入洛谷冈。正dp啼，贪心舞，搜索忙。
+</code></pre>
+<pre><code>怒发冲冠，凭栏处、潇潇雨歇。抬望眼，满天WA，怒火激烈。三十AC尘与土，八千提交云和月。莫抄袭、没了AC记录，空悲切！
+
+CE耻，犹未雪。蒟蒻恨，何时灭！驾程序，踏破题目列表。闭眼写出省选题，笑谈猛刷NOI。待从头、收拾A+B，朝天阙。
+</code></pre>
+<pre><code>AC几时有，把题问OJ。
+不知记录之中，WA占几篇。 
+我欲暴力归去，又恐超时爆零，水题不胜刷。
+起舞切黑题，何似在人间！
+</code></pre>
+<pre><code>江城子·高数
+拿到试卷透心凉,一紧张,公式忘,似曾相识,解法却不详,曲线几何两茫茫,看数列,泪千行。
+两小时后出考场,见同窗,共悲伤,如此成绩,无脸见爹娘,待到老师发卷日,去坟场,饮砒霜。
+</code></pre>
+<pre><code>江城子·挂科
+一夜复习两茫茫，看一句，忘三行，路遇友人，脸色皆凄凉，视死如归入考场，心里慌，手中忙。
+考完之后心凉凉，左右曰，今必亡，查成绩，众人皆过我独亡，再顾昔时左右人，这一群，装逼郎。
+</code></pre>
+<blockquote>
+<p>声明：<br>
+未提前声明时，本网站任何部分转载需注明出处<br>
+谢谢配合</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于]]></title>
+        <id>https://oierty.github.io/about/</id>
+        <link href="https://oierty.github.io/about/">
+        </link>
+        <updated>2020-02-24T16:00:00.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+</blockquote>
+<h2 id="关于本站">🏠 关于本站</h2>
+<h3 id="友链"><strong>友链：</strong></h3>
+<p><a href="https://www.luogu.com.cn/user/231169">大佬Lattle_car【洛谷】</a></p>
+<p><a href="https://oierscw.github.io">Lattle_car</a></p>
+<h3 id="个人"><strong>个人：</strong></h3>
+<p><a href="https://www.luogu.com.cn/user/220678">我自己这个蒟蒻【洛谷】</a></p>
+<p><a href="https://www.luogu.com.cn/blog/tangye123/">洛谷博客</a></p>
+<h3 id="我个人网站均会不定期更新"><strong>我个人网站均会不定期更新</strong></h3>
+<p>👨‍💻 博主是谁</p>
+<p>一个死在文化课上的OIer，现就读于NBFLS。</p>
+<p>⛹ 兴趣爱好</p>
+<p>编程、围棋、数学、物理、化学、刷QQ。</p>
+<p>📬 联系我呀</p>
+<figure data-type="image" tabindex="1"><img src="https://ipcounter.ihcr.top/?mode=2&amp;mail=3290465230@qq.com&amp;qq=3290465230&amp;gh=OIerty&amp;lg=OIer_ty&amp;pic=Chtholly" alt="" loading="lazy"></figure>
+<h3 id="没动过的cf号"><strong>没动过的CF号：</strong></h3>
+<figure data-type="image" tabindex="2"><a href="https://codeforces.com/profile/OIer_ty"><img src="https://img.shields.io/badge/OIer_ty-Unrated%20%200-808080.svg?longCache=true&amp;style=for-the-badge&amp;logo=Codeforces&amp;link=https://codeforces.com/profile/OIer_ty" alt="" loading="lazy"></a></figure>
+<h3 id="动过的cf号"><strong>动过的CF号：</strong></h3>
+<figure data-type="image" tabindex="3"><a href="https://codeforces.com/profile/jvruo_ty"><img src="https://img.shields.io/badge/jvruo_ty-pupil%20%201337-009940.svg?longCache=true&amp;style=for-the-badge&amp;logo=Codeforces&amp;link=https://codeforces.com/profile/jvruo_ty" alt="" loading="lazy"></a></figure>
+]]></content>
+    </entry>
+</feed>

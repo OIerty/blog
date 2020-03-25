@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OIer Tang Ye&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
+    <link rel="stylesheet" href="/media/css/post.css">
+    <link rel="stylesheet" href="/media/live2d/css/live2d.css" />
+    
+</head>
+<body class=" mdui-appbar-with-toolbar  mdui-theme-primary-pink mdui-theme-accent-pink">
+<header class="mdui-toolbar mdui-color-pink mdui-appbar-fixed mdui-appbar-scroll-toolbar-hide" style="z-index: 1000">
+    <a href="javascript:;" mdui-drawer="{target: '#left-drawer',overlay:true}" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+    <span class="mdui-typo-title">OIer Tang Ye&#39;s Blog</span>
+    <div class="mdui-toolbar-spacer"></div>
+<!--    <a href="javascript:history.go(0);" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">more_vert</i></a>
+</header>
+
+<div class="mdui-drawer mdui-color-white mdui-drawer-full-height mdui-drawer-close" id="left-drawer">
+    <ul class="mdui-list">
+        <li class="mdui-subheader">菜单</li>
+        
+        <li class="mdui-list-item mdui-ripple">
+            <a href="/" class="mdui-list-item-content">首页</a>
+        </li>
+        
+        <li class="mdui-list-item mdui-ripple">
+            <a href="/archives" class="mdui-list-item-content">归档</a>
+        </li>
+        
+        <li class="mdui-list-item mdui-ripple">
+            <a href="https://www.luogu.com.cn/user/220678" class="mdui-list-item-content">洛谷</a>
+        </li>
+        
+        <li class="mdui-list-item mdui-ripple">
+            <a href="/contents" class="mdui-list-item-content">目录</a>
+        </li>
+        
+        <li class="mdui-list-item mdui-ripple">
+            <a href="/tags" class="mdui-list-item-content">标签</a>
+        </li>
+        
+        <li class="mdui-list-item mdui-ripple">
+            <a href="/about" class="mdui-list-item-content">关于</a>
+        </li>
+        
+        <li class="mdui-list-item mdui-ripple">
+            <a href="/solution" class="mdui-list-item-content">题解</a>
+        </li>
+        
+    </ul>
+</div>
+
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main" role="main">
+            <article id="post-1270" class="post-1270 post type-post status-publish format-standard hentry category-90 category-129 tag-149">
+                <header class="entry-header">
+                    <h1 class="entry-title">浅谈__int128</h1>
+                    <p class="entry-census">发布于 2020-02-29</p>
+                    <hr>
+                </header>
+                <div class="neko">
+                    <p>很多时候，题目的数据范围刚好卡在long long的临界范围，经过多次运算后，最后答案就有可能会爆（例如P6101 出言不逊）。</p>
+<p>有可能只是本蒟蒻太菜，不会用其他方法，我就偶然瞟到了有人在讨论__int128这个类型，我觉得很神奇，就自己试了试，发现：</p>
+<p><s>woc</s>，不能用cin，cout读入输出有个鬼用</p>
+<p>于是我想到了类似于快读的好东西</p>
+<p>读入程序如下：</p>
+<pre><code>inline void read(__int128 &amp;x) {
+	x=0;
+	int f=1;//判断正负 
+	char ch=getchar();//读入字符
+	while(ch&lt;'0'||ch&gt;'9') {
+		if(ch=='-')
+			f=-1;
+		ch=getchar();
+	}
+	while(ch&gt;='0'&amp;&amp;ch&lt;='9') {//是数字就读
+		x=x*10+ch-'0';//之前结果乘10，加现在读入的
+		ch=getchar();
+	}
+	x*=f;//添上符号返回
+}
+</code></pre>
+<p>输出程序如下：</p>
+<pre><code>inline void write(__int128 x) {
+	if(x&lt;0) {
+		putchar('-');//输出符号
+		x=-x;
+	}
+	if(x&gt;9)write(x/10);//递归输出
+	putchar(x%10+'0');//输出个位
+}
+</code></pre>
+<p>以下是操作实例：</p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+inline void read(__int128 &amp;x) {
+	x=0;
+	int f=1;//判断正负 
+	char ch=getchar();//读入字符
+	while(ch&lt;'0'||ch&gt;'9') {
+		if(ch=='-')
+			f=-1;
+		ch=getchar();
+	}
+	while(ch&gt;='0'&amp;&amp;ch&lt;='9') {//是数字就读
+		x=x*10+ch-'0';//之前结果乘10，加现在读入的
+		ch=getchar();
+	}
+	x=x*f;//添上符号返回
+}
+inline void write(__int128 x) {
+	if(x&lt;0) {
+		putchar('-');//输出符号
+		x=-x;
+	}
+	if(x&gt;9)write(x/10);//递归输出
+	putchar(x%10+'0');//输出个位
+}
+__int128 a,b;
+int main(){
+	read(a);//读入a
+	read(b);//读入b
+	write(a+b);//输出a+b
+	return 0;//完美结束
+}
+</code></pre>
+<p>__int128范围是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">−</mi><msup><mn>2</mn><mn>127</mn></msup><mo>≤</mo><mi>x</mi><mo>&lt;</mo><msup><mn>2</mn><mn>127</mn></msup></mrow><annotation encoding="application/x-tex">−2^{127}≤x&lt;2^{127}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.950078em;vertical-align:-0.13597em;"></span><span class="mord">−</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">2</span><span class="mord mtight">7</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">2</span><span class="mord mtight">7</span></span></span></span></span></span></span></span></span></span></span></span>。</p>
+<p>那有时候条件是&lt;$ 2^{128} $的非负整数数怎么办？</p>
+<p>那就加个unsigned呀！</p>
+<p>直接讲实例了：</p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+inline void read(unsigned __int128 &amp;x) {
+	x=0; 
+	char ch=getchar();//读入字符
+	while(ch&gt;='0'&amp;&amp;ch&lt;='9') {//是数字就读
+		x=x*10+ch-'0';//之前结果乘10，加现在读入的
+		ch=getchar();
+	}
+	//已经读完 
+}
+inline void write(unsigned __int128 x) {
+	if(x&gt;9)write(x/10);//递归输出
+	putchar(x%10+'0');//输出个位
+}
+unsigned __int128 a,b;//无符号整型
+int main(){
+	read(a);//读入a
+	read(b);//读入b
+	write(a+b);//输出a+b
+	return 0;//完美结束
+}
+</code></pre>
+<p>但是大家要注意，尽量少用，因为内存占得很多</p>
+<h2 id="洛谷原文"><a href="https://www.luogu.com.cn/blog/tangye123/qian-tan-int128-post">洛谷原文</a></h2>
+<blockquote>
+<p>声明：<br>
+未提前声明时，本网站任何部分转载需注明出处<br>
+谢谢配合</p>
+</blockquote>
+
+                </div>
+            </article>
+        </main>
+    </div>
+    <div class="doc-footer-nav mdui-color-theme">
+        <div class="mdui-container">
+            <div class="mdui-row">
+                
+                <a href="https://oierty.github.io/statement/" class="mdui-ripple mdui-color-theme mdui-col-xs-2 mdui-col-sm-6 doc-footer-nav-left">
+                    <div class="doc-footer-nav-text">
+                        <i class="mdui-icon material-icons">arrow_back</i>
+                        <span class="doc-footer-nav-direction mdui-hidden-xs-down">上一篇文章</span>
+                        <div class="doc-footer-nav-chapter mdui-hidden-xs-down">声明</div>
+                    </div>
+                </a>
+                
+                
+                <a href="https://oierty.github.io/game/" class="mdui-ripple mdui-color-theme mdui-col-xs-10 mdui-col-sm-6 doc-footer-nav-right">
+                    <div class="doc-footer-nav-text">
+                        <i class="mdui-icon material-icons">arrow_forward</i>
+                        <span class="doc-footer-nav-direction">下一篇文章</span>
+                        <div class="doc-footer-nav-chapter">游戏</div>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <div class="comment"></div>
+</div>
+<footer class="mdui-container footer ">
+    <div class="head_card-offset"></div>
+    <div class="mdui-row mdui-row-gapless">
+        <div class="k-container">
+            <img width="100%" src="/media/img/skirt.png">
+        </div>
+    </div>
+
+    <div class="site-info">
+        <div class="to-top" style="display: block; background-position-x: -40px;"></div>
+
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=290 src="//music.163.com/outchain/player?type=0&id=4901125779&auto=1&height=430"></iframe>
+
+<style>
+    body {
+      background: url(https://s2.ax1x.com/2020/02/29/3sEyPP.jpg) fixed center;
+      background-size: cover;
+    }
+  </style>
+
+Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+</footer>
+<div id="landlord" style="left:5px;bottom:0px;">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+        <div class="live_talk_input_name_body">
+            <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off" placeholder="你的名字" />
+        </div>
+        <div class="live_talk_input_text_body">
+            <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off" placeholder="要和我聊什么呀？"/>
+            <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+        </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+        <div class="live_ico_item type_info" id="showInfoBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_music" id="musicButton"></div>
+        <div class="live_ico_item type_youdu" id="youduButton"></div>
+        <div class="live_ico_item type_quit" id="hideButton"></div>
+        <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+        <input name="live2dBGM" value="https://img.apa70.com/123.mp3" type="hidden">
+        <input name="live2dBGM" value="https://img.apa70.com/123.mp3" type="hidden">
+        <input id="duType" value="douqilai,l2d_caihong" type="hidden">
+    </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+<script>
+    var message_Path = '/media/live2d/';//资源目录，如果目录不对请更改
+    var talkAPI = "";//如果有类似图灵机器人的聊天接口请填写接口路径
+</script>
+<!--<script src="/media/js/jquery-3.3.1.min.js"></script>-->
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/media/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/js/message.js"></script>
+
+</body>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    $('.comment').bind('DOMNodeInserted',()=>{
+        $('.comment').unbind()
+
+        $('.vbtn').addClass(' mdui-btn mdui-color-theme-accent mdui-ripple')
+    })
+
+    let valine = new Valine({
+        el: '.comment',
+        
+        
+        
+        placeholder: '欢迎来到OIerty的小站',
+        
+        path: window.location.pathname,
+        pageSize: 30,
+        avatar:'mm',
+        notify:true
+    })
+</script>
+</html>
